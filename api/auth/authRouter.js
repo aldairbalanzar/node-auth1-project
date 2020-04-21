@@ -12,7 +12,7 @@ router.post('/register', (req, res) => {
 
     Users.add(req.body)
     .then(user => res.status(201).json({ message: "successfuly registered!", user: user }))
-    .catch(err => res.status(500).json({ errorMessage: "could not register user."}))
+    .catch(err => res.status(500).json({ message: "could not register user."}))
 });
 
 router.post('/login', (req, res) => {
@@ -27,7 +27,7 @@ router.post('/login', (req, res) => {
             res.status(401).json({ message: "invalid credentials."})
         }
     })
-    .catch(err => res.status(500).json({ errorMessage: "error finding user."}))
+    .catch(err => res.status(500).json({ message: "error finding user."}))
 });
 
 router.get('/logout', (req, res) => {

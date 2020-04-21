@@ -6,8 +6,8 @@ exports.up = function(knex) {
   
       tbl.string('username', 128)
         .notNullable()
-        .unique();
-      tbl.string('password', 128);
+      tbl.string('password', 128)
+        .notNullable()
     })
 
       .createTable('foods', tbl => {
@@ -37,7 +37,7 @@ exports.up = function(knex) {
   
   exports.down = function(knex) {
     return knex.schema
-    .dropTableIfExists('user_food')
+    .dropTableIfExists('user_foods')
     .dropTableIfExists('foods')
     .dropTableIfExists('users')
 

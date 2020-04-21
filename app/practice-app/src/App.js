@@ -1,71 +1,39 @@
-import React, { useState, useEffect } from "react";
-// import { useHistory } from 'react-router-dom';
-import { axiosWithAuth } from './utils/auxiosWithAuth';
+import React, { useState } from "react";
+import RegisterForm from './RegisterForm'
 import './App.css';
 
 function App() {
-  // const history = useHistory();
 
-  const [credentials, setCredentials] = useState({
+  const [state, setState] = useState({
+    step: 1,
     username: '',
     password: ''
-});
-
-  const [message, setMessage] = useState('');
-
-const handleChange = e => {
-  setCredentials({
-    ...credentials,
-    [e.target.name]: e.target.value
   });
-};
 
-const handleSubmit = e => {
-  e.preventDefault();
-  axiosWithAuth()
-    .post('/api/auth/register', credentials)
-    .then(res => {
-      console.log('handleSubmit res:', res.data);
-      setMessage(res.data.messsage)
-      console.log(message)
-      setCredentials({
-        username: '',
-        password: ''
-      })
+  const next = () => {
+    const { step } = state;
+    setState({
+      step: step ++
     })
-    .catch(err => console.log(err));
-}
+  };
 
-  return (
-    <div className="App">
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={credentials.username}
-            onChange={handleChange}
-            placeholder="username"
-            />
-        </label>
+  const previous = () => {
+    const { step } = state;
+    setState({
+      step: step --
+    })
+  };
 
-        <label htmlFor="password">
-          <input
-            type="text"
-            id="password"
-            name="password"
-            value={credentials.password}
-            onChange={handleChange}
-            placeholder="password"
-            />
-        </label>
+  const values = {
+    ...state
+  };
 
-        <button type="submit"> register </button>
-      </form>
-      <p>{message}</p>
-    </div>
-  );
+  switch(state.step) {
+    case 1:
+      return (
+        <RegisterForm next={next} previoust={previous} values={values} />
+      )
+  }
 }
 
 export default App;
